@@ -1,0 +1,48 @@
+class Solution
+{
+    public:
+    void solve(int x, int y, vector<vector<int>>& grid){
+        if(grid[x][y] == 3|| grid[x][y] == 2){
+            grid[x][y] = 1;
+        }
+        else{
+            return;
+        }
+        
+        int n = grid.size();
+        if(x+1<n){
+            solve(x+1, y, grid);
+        }
+        if(x-1>=0){
+            solve(x-1, y, grid);
+        }
+        if(y-1>=0){
+            solve(x, y-1, grid);
+        }
+        if(y+1<n){
+            solve(x, y+1, grid);
+        }
+        return;
+    }
+    
+    bool is_Possible(vector<vector<int>>& grid){
+        int sx = -1, sy = -1, dx = -1, dy = -1;
+        int n = grid.size();
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                if(grid[i][j] == 1){
+                    sx = i;
+                    sy = j;
+                    grid[i][j] = 3;
+                }
+                else if(grid[i][j] == 2 ){
+                    dx = i;
+                    dy = j;
+                }
+            }
+        }
+        
+        solve(sx,sy, grid);
+        return (grid[dx][dy]==1);
+    }
+};
