@@ -1,0 +1,12 @@
+
+class Solution {
+  public:
+    int minIteration(int n, int m, int x, int y) {
+        int row=max(x-1,n-x);
+        int col=max(y-1,m-y);
+        return row+col;
+
+        // code here
+        
+    }
+};
