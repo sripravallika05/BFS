@@ -1,0 +1,26 @@
+class Solution {
+  public:
+    void pushing(Node* root, map<int,int> &mp,map<int,int> &mp1,int level) {
+        if (!root) return;
+        mp[root->data] = level;
+        if (root->left) {
+            mp1[root->left->data] = root->data;
+            pushing(root->left,mp,mp1,level+1);
+        }
+        if (root->right) {
+            
+        mp1[root->right->data] = root->data;
+        pushing(root->right,mp,mp1,level+1);
+        }
+            
+        
+        
+    }
+    bool isCousins(Node* root, int x, int y) {
+        map<int,int>mp;
+        map<int,int>mp1;
+        pushing(root,mp,mp1,0);
+        return mp[x] == mp[y] && mp1[x]!=mp1[y];
+        
+    }
+};
