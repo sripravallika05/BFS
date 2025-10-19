@@ -1,0 +1,55 @@
+struct trie{
+    unordered_map<char,trie*>mp;
+};
+
+void build(trie* root,string &s,int i,int n){
+    trie* tmp = root;
+    for(int j=i;j<n;j++){
+        if(tmp->mp.find(s[j])==tmp->mp.end()){
+            tmp->mp[s[j]]=new trie();
+        }
+        tmp=tmp->mp[s[j]];
+    }
+}
+
+bool search(trie* root,string s){
+    trie* tmp = root;
+    int n = s.size();
+    for(int j=0;j<n;j++){
+        if(tmp->mp.find(s[j])==tmp->mp.end()){
+            return true;
+        }
+        tmp=tmp->mp[s[j]];
+    }
+    return false;
+}
+string ans = "";
+void allvalid(trie* root,string s,int f,int j,int n){
+    if(j==n)return;
+    if(ans.size()>0)return;
+    if(f==1){
+        if(search(root,s)){
+            ans=s;
+            return;
+        }
+    }
+    for(int i=-1;i<26;i++){
+        if(i>=0){
+            char ch = 'a'+i;
+            allvalid(root,s+ch,1,j+1,n);
+        }else allvalid(root,s,f,j+1,n);
+    }
+}
+string lexicographicalSmallestString(string& s) {
+    trie* root = new trie();
+    ans="";
+    int n = s.size();
+    for(int i=0;i<n;i++){
+        build(root,s,i,n);
+    }
+    allvalid(root,"",0,0,n);
+    return ans;
+}
+
+ 
+
